@@ -25,12 +25,12 @@ public class BitmapFont {
 	private int[] spacing = new int[2];
 	private int[] padding = new int[4];
 	private int fontColor = 0xFFFFFF;
-	public boolean first = false;	
+	public boolean first = false;
 
 	public BitmapFont(String fontfile, int fntColor) {
 		this.fontFile = fontfile;
 		this.fontColor = fntColor;
-		
+
 		loadFontTable();
 	}
 
@@ -93,18 +93,18 @@ public class BitmapFont {
 		}
 	}
 
-	
+
 	private void processCharacterLine(String line, BufferedImage chars, int currentCharIndex) {
 		int id, x, y, w, h, xo, yo, xa;
 		String l = line;
 		// Char ID
 		id = Integer.parseInt(l.substring(l.indexOf("=") + 1, 13).trim());
 		l = l.substring(14);
-		
+
 		// x
 		x = Integer.parseInt(l.substring(l.indexOf("=") + 1, 7).trim());
 		l = l.substring(8);
-		
+
 		// y
 		y = Integer.parseInt(l.substring(l.indexOf("=") + 1, 7).trim());
 		l = l.substring(8);
@@ -129,8 +129,8 @@ public class BitmapFont {
 		xa = Integer.parseInt(l.substring(l.indexOf("=") + 1, 14).trim());
 
 
-		fontTable[currentCharIndex] = new Character(
-				chars.getSubimage(x, y, w, h), 
+		fontTable[currentCharIndex] = new spacegame.Character(
+				chars.getSubimage(x, y, w, h),
 				id, w, h, xo, yo, xa);
 	}
 
@@ -139,7 +139,7 @@ public class BitmapFont {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		BufferedImage fontImages = loader.loadSprite("res/" + this.fontImageFile);
 		int charCount = 0;
-		
+
 		try {
 			while((lineRead = input.readLine()) != null) {
 				processCharacterLine( lineRead, fontImages, charCount );
@@ -149,7 +149,7 @@ public class BitmapFont {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void loadFontTable() {
 		try {
 			FileReader inputStream = new FileReader(this.fontFile);
@@ -158,7 +158,7 @@ public class BitmapFont {
 			readHeader(input);
 			fontTable = new Character[this.numOfChars];
 			readCharacters(input);
-			
+
 			input.close();
 			inputStream.close();
 		} catch (FileNotFoundException e) {
@@ -171,35 +171,35 @@ public class BitmapFont {
 	public BufferedImage getChar( int index ) {
 		if (index >= 0 && index < this.numOfChars)
 			return fontTable[index].ch;
-		
+
 		return null;
 	}
-	
+
 	public BufferedImage getChar (char c) {
 		for (int i = 0; i < this.numOfChars; i++) {
 			if (fontTable[i].chCode == (int) c)
 				return fontTable[i].ch;
 		}
-		
+
 		return null;
 	}
-	
+
 	public char getAsciiCode( int index ) {
 		if (index >= 0 && index < this.numOfChars)
 			return (char)fontTable[index].chCode;
-		
+
 		return ' ';
 	}
-	
+
 	public int getIndex(char c) {
 		for(int i = 0; i < this.numOfChars; i++) {
 			if (fontTable[i].chCode == (int) c)
 				return i;
 		}
-		
+
 		return 0;
 	}
-	
+
 	public BufferedImage getString(String s) {
 		BufferedImage textLine = null;
 		int w = 0;
@@ -207,33 +207,33 @@ public class BitmapFont {
 		for (int i = 0; i < s.length(); i++) {
 			w += fontTable[getIndex(s.charAt(i))].chXAdvance + this.spacing[SPACING_HORIZONTAL];
 		}
-		
+
 		// Create the image
 		textLine = new BufferedImage(w, this.lineheight, BufferedImage.TYPE_INT_ARGB);
-		
+
 		// Add the character images to the textLine
 		Graphics2D g = (Graphics2D) textLine.getGraphics();
 		int x = 0, y = 0;
 		for(int i = 0; i < s.length(); i++) {
 			g.drawImage(fontTable[getIndex(s.charAt(i))].ch, //.getCh(fontColor), 
-					x + fontTable[getIndex(s.charAt(i))].chXOffset, 
-					y + fontTable[getIndex(s.charAt(i))].chYOffset, 
+					x + fontTable[getIndex(s.charAt(i))].chXOffset,
+					y + fontTable[getIndex(s.charAt(i))].chYOffset,
 					null);
 			x += fontTable[getIndex(s.charAt(i))].chXAdvance + this.spacing[SPACING_HORIZONTAL];
 		}
-		
+
 		g.dispose();
-		
+
 		return textLine;
 	}
-	
+
 	public void drawString(Graphics g, String s, int x, int y) {
 		BufferedImage str = getString(s);
-		
+
 		for (int row = 0; row < str.getHeight(); row++) {
 			for (int col = 0; col < str.getWidth(); col++) {
 				//g.draw
-			
+
 			}
 		}
 	}

@@ -5,14 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class Background {
 	/*
-	 * De achtergrond die we gaan gebruiken leggen we twee keer aan. De main
-	 * is te zien in ons venster, terwijl de secondary virtueel boven het venster
-	 * is geplaatst. Dit doen we omdat we een achtergrond willen simuleren die
-	 * op het oog naar beneden scrolled. Door de secondary er virtueel boven te
-	 * plaatsen scrolled die mee naar beneden en zien we dus geen hiaten. Als
-	 * we dan met de main de onderkant hebben bereikt schuiven we 'stiekem' 
-	 * alles weer terug naar hun startpositie. Dit geeft het effect van een
-	 * continue scrollende background
+	 * De achtergrond die we gaan gebruiken leggen we twee keer aan. De main is te zien in ons venster, terwijl de
+	 * secondary virtueel boven het venster is geplaatst. Dit doen we omdat we een achtergrond willen simuleren die op
+	 * het oog naar beneden scrolled. Door de secondary er virtueel boven te plaatsen scrolled die mee naar beneden en
+	 * zien we dus geen hiaten. Als we dan met de main de onderkant hebben bereikt schuiven we 'stiekem' alles weer
+	 * terug naar hun startpositie. Dit geeft het effect van een continue scrollende background
 	 */
 	private BufferedImage mainBackgroundImage;
 	private BufferedImage secondaryBackgroundImage;

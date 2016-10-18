@@ -22,7 +22,7 @@ public class SpriteSheet {
 	}
 	
 	private void loadSprites(int startingX, int startingY) {
-		BufferedImageLoader loader = new BufferedImageLoader();
+		BufferedImageLoader loader = new spacegame.BufferedImageLoader();
 		BufferedImage spriteSheet = loader.loadSprite(spriteSheetFileName);
 
 		sprites = new BufferedImage[ numberOfSprites ];

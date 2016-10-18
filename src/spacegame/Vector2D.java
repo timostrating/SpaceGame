@@ -1,6 +1,6 @@
 package spacegame;
 
-public class Vector2D {
+public class Vector2D {  // Nice
 	public double x;
 	public double y;
 	

@@ -34,7 +34,7 @@ public class Enemy extends MoveableObject {
 			animationTimer += animationTick;
 		}
 		
-		y += r.nextDouble() * velocityY;
+		y += r.nextDouble() * velocityY;  // FIXME this is heavy on performance
 		if (y > (double)(bounds.height)) {
 			y = -(r.nextInt(bounds.height));
 			x = r.nextInt(bounds.width);

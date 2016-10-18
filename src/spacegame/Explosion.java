@@ -3,7 +3,7 @@ package spacegame;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Explosion extends MoveableObject {
+public class Explosion extends MoveableObject {  // TODO this should extend from FX or Mobi
 	private final int SPRITE_SIZE_WIDTH = 50;
 	private final int SPRITE_SIZE_HEIGHT = 50;
 	private final int SPRITE_STARTING_Y = 100;
