@@ -1,0 +1,20 @@
+Map van \Programmeren\Projecten\Les - SpaceGame\res
+
+11-10-2013  19:43            17.102 amethyst.fnt
+11-10-2013  19:42            10.452 amethyst_0.png
+12-10-2013  22:46            21.888 arial18px.fnt
+12-10-2013  22:44             7.036 arial18px_0.png
+07-10-2013  09:54           916.837 background.jpg
+07-10-2013  13:00            91.761 background2.fw.png
+07-10-2013  11:50            28.740 background2.jpg
+30-09-2013  09:51            55.098 beams.png
+28-10-2013  09:08                 0 bestanden.txt
+13-05-2013  18:24           151.160 bullet.wav
+21-07-2009  12:38           277.340 explosion.wav
+07-10-2013  12:59            64.350 healthbar.fw.png
+11-10-2013  10:23            11.024 robotomedium_2.png
+11-10-2013  19:09            22.013 robotomedium_2a.fnt
+07-10-2013  13:00            58.555 score.fw.png
+30-09-2013  09:55            91.171 spritesheet.png
+07-10-2013  14:47           686.671 spritesheet_new.fw.png
+              17 bestand(en)        2.511.198 bytes
