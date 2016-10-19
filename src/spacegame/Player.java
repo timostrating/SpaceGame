@@ -11,7 +11,7 @@ public class Player extends MoveableObject {
 	private final int SPRITE_COUNT = 2;
 	public static double SPEED = 5.0;
 	private double health = 100.0;
-	private double hitPoints = 10;
+	private double hitPoints = 25;
 	
 	public Player(double x, double y, Dimension bounds) {
 		super(x, y, bounds);
@@ -22,7 +22,7 @@ public class Player extends MoveableObject {
 				SPRITE_COUNT);
 	}
 	
-	public void tick() {
+	public void update() {
 		if(animationTimer >= 1.0) {
 			animationTimer = 0.0;
 			currentSprite++;
@@ -71,7 +71,7 @@ public class Player extends MoveableObject {
 		for (int i = 0; i < withObjects.size(); i++) {
 			MoveableObject obj = withObjects.get(i);
 
-			if (hasCollided(obj)) {
+			if (hasCollided(obj)) { // FIXME kan NullPointerException geven
 				collisionDetected = true;
 				break;
 			}
@@ -83,16 +83,14 @@ public class Player extends MoveableObject {
 	public double getHealth() {
 		return health;
 	}
-
 	public void setHealth(double health) {
 		this.health = health;
 	}
 
-	public void setHitpoints( double hp ) {
-		this.hitPoints = hp;
-	}
-	
 	public double getHitpoints() {
 		return this.hitPoints;
+	}
+	public void setHitpoints( double hitP ) {
+		this.hitPoints = hitP;
 	}
 }

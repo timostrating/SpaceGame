@@ -15,7 +15,7 @@ public class JukeBox {
 	private static boolean mute = false;
 	
 	public static void init() {
-		clips = new HashMap<String, Clip>();
+		clips = new HashMap<String, Clip>();  // TODO  it is easy to make misstakes in strings maybe a enum ?
 		gap = 0;
 	}
 	
@@ -62,7 +62,7 @@ public class JukeBox {
 		if(c == null) return;
 		if(c.isRunning()) c.stop();
 		c.setFramePosition(i);
-		while(!c.isRunning()) c.start();
+		while(c.isRunning() == false) c.start();
 	}
 	
 	public static void stop(String s) {

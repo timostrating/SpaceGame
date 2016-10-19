@@ -21,12 +21,11 @@ public class Explosion extends MoveableObject {  // TODO this should extend from
 				SPRITE_SIZE_WIDTH, SPRITE_SIZE_HEIGHT, 
 				SPRITE_STARTING_X, SPRITE_STARTING_Y, 
 				SPRITE_COUNT);
-
 	}
 
 	@Override
-	public void tick() {
-		if(animationTimer >= 1.0 && !isDone) {
+	public void update() {
+		if(animationTimer >= 1.0 && isDone == false) {
 			animationTimer = 0.0;
 			currentSprite++;
 			if(currentSprite >= objectSprites.getNumberOfSprites())
@@ -38,7 +37,7 @@ public class Explosion extends MoveableObject {  // TODO this should extend from
 
 	@Override
 	public void render(Graphics g) {
-		if(!isDone)
+		if(isDone == false)
 			g.drawImage(objectSprites.getSprite(currentSprite), 
 					(int) x, (int) y, null);
 	}

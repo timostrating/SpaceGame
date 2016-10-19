@@ -24,7 +24,7 @@ public class Enemy extends MoveableObject {
 	}
 	
 	@Override
-	public void tick() {
+	public void update() {
 		if(animationTimer >= 1.0) {
 			animationTimer = 0.0;
 			currentSprite++;
@@ -51,12 +51,12 @@ public class Enemy extends MoveableObject {
 				(int) x, (int) y, 
 				objectSprites.getSpriteWidth(), objectSprites.getSpriteHeight(), 
 				null);
-		g.setColor(Color.RED);
+		g.setColor(Color.RED); 		// health bar rode onderlaag
 		g.fillRect((int) x, 
 				   (int) y - (objectSprites.getSpriteHeight() / 2), 
 				   objectSprites.getSpriteWidth(), 
 				   5);
-		g.setColor(Color.GREEN);
+		g.setColor(Color.GREEN); 	// health bar groen dat boven op rood licht
 		g.fillRect((int) x, 
 				   (int) y - (objectSprites.getSpriteHeight() / 2), 
 				   (int) (objectSprites.getSpriteWidth() * (getHealth() / getMaxHealth())), 

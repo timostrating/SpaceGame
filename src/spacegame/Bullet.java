@@ -23,7 +23,7 @@ public class Bullet extends MoveableObject {
 	}
 
 	@Override
-	public void tick() {
+	public void update() {
 		y += SPEED;
 	}
 

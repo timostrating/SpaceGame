@@ -29,7 +29,7 @@ public class Background {
 		secondaryBackgroundPosition = new Vector2D(0, -(mainBackgroundImage.getHeight()));
 	}
 
-	public void tick() {
+	public void update() {
 		mainBackgroundPosition.y += backgroundMoveSpeed;
 		secondaryBackgroundPosition.y += backgroundMoveSpeed;
 		

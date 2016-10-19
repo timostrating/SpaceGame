@@ -23,7 +23,7 @@ public abstract class MoveableObject {    // TODO add Mobi
 		this.bounds = bounds;
 	}
 	
-	public abstract void tick();
+	public abstract void update();
 	public abstract void render(Graphics g);
 	public abstract boolean hasCollided(MoveableObject withObject);  // TODO this should be not be set abstract here
 	public abstract boolean hasCollided(ArrayList<MoveableObject> withObjects); // TODO ^^
