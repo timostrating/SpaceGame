@@ -9,7 +9,7 @@ public class Player extends MoveableObject {
 	private final int SPRITE_STARTING_X = 0;
 	private final int SPRITE_STARTING_Y = 0;
 	private final int SPRITE_COUNT = 2;
-	public static double SPEED = 5.0;
+	public static float SPEED = 5.0F;
 	private double health = 100.0;
 	private double hitPoints = 25;
 	

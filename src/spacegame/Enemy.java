@@ -73,7 +73,7 @@ public class Enemy extends MoveableObject {
 		collisionDetected = pRect.intersects(eRect);
 		
 		if(collisionDetected) {
-			this.health -= withObject.getHitpoints();
+			this.health = 0;
 		}
 		
 		return collisionDetected;
