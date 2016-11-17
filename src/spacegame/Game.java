@@ -1,8 +1,6 @@
 package spacegame;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,10 +8,10 @@ import java.util.Random;
 
 
 // Hier start de game. In deze class zit de algemene functie main waarmee Java een programma opstart
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable {
 
 	//	private static final long serialVersionUID = 1248653701434724090L; // TODO
-	private String TEXT_Title = "2D Space Game Versie 0.0.4";
+	private String TEXT_Title = "2D Space Game Versie 0.0.5";
 	private static final int WIDTH = 800;			// De breedte van het venster
 	private static final int HEIGHT = 900;			// De hoogte van het venster
 	public static final Dimension bounds = new Dimension(WIDTH, HEIGHT);  // de afmetingen van het venster
@@ -26,6 +24,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Background background;					// Bevat onze achtergrond
 	private UI ui;									// Alle UI,
 	private Player player;							// De class die alle data van de speler bevat inc. de sprite
+	private DebugFPS debugFPS;						// fps drawer
+	private InputManager inputManager;				// our inputManager
 
 	//we plaatsten alle beweegbare objecten nu nog in apparte lijsten
 	private ArrayList<MoveableObject> enemies;		// Alle vijanden
@@ -82,6 +82,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public void awake() {  // TODO this function will have to many pesponsebilities,
 						   // TODO \ awake should be called at the object that needs it
 		background = new Background();
+		inputManager = InputManager.getInstance();
 
 		player = new Player(300, 800, Game.bounds);
 		ui = new UI(player);
@@ -98,6 +99,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		JukeBox.init();
 		JukeBox.load("res/bullet.wav", "firing");
 		JukeBox.load("res/explosion.wav", "explosion");
+
+		debugFPS = new DebugFPS();
 	}
 
 
@@ -129,9 +132,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	/* The Game loop patern will look like this
         awake();
         while(true) {
-            processInput();
-            update();
-            render();
+            while( < 16.66 ms) { 		// unlimited updates
+            	processInput();
+            	update();
+			}
+            render(); 					// 60fps
         }
 	 */
 	@Override
@@ -149,13 +154,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			lastTime = currentTime;
 			lag += elapsed;
 
-			//processInput();
 			while (lag >= MS_PER_FRAME)	{ // TODO  not perfect jet
+				processInput();
 				update();
 				lag -= MS_PER_FRAME;
 			}
 			render(); 	// Render per frame
 		}
+	}
+
+
+	public void processInput() {
+		inputManager.update();
 	}
 
 
@@ -173,7 +183,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		// losse objecten
 		background.update();
 		player.update();
-		ui.update();
+		debugFPS.update();
 
 		// game over ?
 		if (player.getHealth() <= 0.0 && gameOver == false) {  // TODO dit is iets voor de speler niet de Game Master
@@ -296,6 +306,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			explosions.get(i).render(g);
 		}
 
+		debugFPS.render(g);
 		////////////////////////////////////////////////////////////////////////////////////// THE END
 
 		g.dispose();
@@ -303,83 +314,81 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 
 
-	/*
-	 * Hier vangen we de toetsen af en doen we alleen iets met de toetsen die wij willen gebruiken in de game voor de
-	 * besturing van de speler sprite  // TODO this should be placed in a Input manager / player controller
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) { // TODO  the caller of this fuction is build for typing not real input
-		switch (e.getKeyCode()) {  // TODO  een switch verwerkt de input niet goed als we meerder knoppen tegelijk
-			                       // TODO  \ proberen op te vangen
-			case KeyEvent.VK_UP:
-				player.setVelocityY(-Player.SPEED);
-				break;
-
-			case KeyEvent.VK_DOWN:
-				player.setVelocityY(Player.SPEED);
-				break;
-
-			case KeyEvent.VK_LEFT:
-				player.setVelocityX(-Player.SPEED);
-				break;
-
-			case KeyEvent.VK_RIGHT:
-				player.setVelocityX(Player.SPEED);
-				break;
-
-			case KeyEvent.VK_SPACE: // Fire button
-				createBullet(); // TODO this should be handeld in a player controller
-				break;
-
-			case KeyEvent.VK_ESCAPE:
-				System.exit(0);
-				break;
-		}
-	}
-
-
-	// shiet bullet af vanaf de Speler
-	private void createBullet() {  // TODO this should not be here, this is for the player / gun
-		bullets.add(new Bullet(
-				player.getX()
-						+ (player.getSpriteWidth() / 2 -
-								(Bullet.SPRITE_SIZE_WIDTH / 2)),
-				player.getY() - Bullet.SPRITE_SIZE_HEIGHT,
-				player.getHitpoints(),
-				bounds));
-		JukeBox.play("firing");
-		//JukeBox.play("firing");
-	}
-
-
-	// resetten van de velocitie als we een kop loslaten
-	@Override
-	public void keyReleased(KeyEvent e) {  // TODO zo gaat dat natuurlijk niet werken he
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			player.setVelocityY(0.0);
-			break;
-
-		case KeyEvent.VK_DOWN:
-			player.setVelocityY(0.0);
-			break;
-
-		case KeyEvent.VK_LEFT:
-			player.setVelocityX(0.0);
-			break;
-
-		case KeyEvent.VK_RIGHT:
-			player.setVelocityX(0.0);
-			break;
-
-		case KeyEvent.VK_SPACE: // Fire button
-			break;
-		}
-	}
-
-
-	// KeyListener wil dat we hier wat mee doen maar we hebben het niet nodig, dus laten we het leeg
-	@Override
-	public void keyTyped(KeyEvent e) {
-	} // Not used
+//	/*
+//	 * Hier vangen we de toetsen af en doen we alleen iets met de toetsen die wij willen gebruiken in de game voor de
+//	 * besturing van de speler sprite  // TODO this should be placed in a Input manager / player controller
+//	 */
+//	@Override
+//	public void keyPressed(KeyEvent e) { // TODO  the caller of this fuction is build for typing not real input
+//		switch (e.getKeyCode()) {  // TODO switch verwerkt de input niet goed als we meerder knoppen tegelijk opvangen
+//			case KeyEvent.VK_UP:
+//				player.setVelocityY(-Player.SPEED);
+//				break;
+//
+//			case KeyEvent.VK_DOWN:
+//				player.setVelocityY(Player.SPEED);
+//				break;
+//
+//			case KeyEvent.VK_LEFT:
+//				player.setVelocityX(-Player.SPEED);
+//				break;
+//
+//			case KeyEvent.VK_RIGHT:
+//				player.setVelocityX(Player.SPEED);
+//				break;
+//
+//			case KeyEvent.VK_SPACE: // Fire button
+//				createBullet(); // TODO this should be handeld in a player controller
+//				break;
+//
+//			case KeyEvent.VK_ESCAPE:
+//				System.exit(0);
+//				break;
+//		}
+//	}
+//
+//
+//	// shiet bullet af vanaf de Speler
+//	private void createBullet() {  // TODO this should not be here, this is for the player / gun
+//		bullets.add(new Bullet(
+//				player.getX()
+//						+ (player.getSpriteWidth() / 2 -
+//								(Bullet.SPRITE_SIZE_WIDTH / 2)),
+//				player.getY() - Bullet.SPRITE_SIZE_HEIGHT,
+//				player.getHitpoints(),
+//				bounds));
+//		JukeBox.play("firing");
+//	}
+//
+//
+//	// resetten van de velocitie als we een kop loslaten
+//	@Override
+//	public void keyReleased(KeyEvent e) {  // TODO zo gaat dat natuurlijk niet werken he
+//		switch (e.getKeyCode()) {
+//		case KeyEvent.VK_UP:
+//			player.setVelocityY(0.0);
+//			break;
+//
+//		case KeyEvent.VK_DOWN:
+//			player.setVelocityY(0.0);
+//			break;
+//
+//		case KeyEvent.VK_LEFT:
+//			player.setVelocityX(0.0);
+//			break;
+//
+//		case KeyEvent.VK_RIGHT:
+//			player.setVelocityX(0.0);
+//			break;
+//
+//		case KeyEvent.VK_SPACE: // Fire button
+//			break;
+//		}
+//	}
+//
+//
+//	// KeyListener wil dat we hier wat mee doen maar we hebben het niet nodig, dus laten we het leeg
+//	@Override
+//	public void keyTyped(KeyEvent e) {
+//	} // Not used
 }

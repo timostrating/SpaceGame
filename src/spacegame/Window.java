@@ -18,7 +18,7 @@ public class Window extends Canvas {
 
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.addKeyListener( game );  // InputManager.getInstance()
+        frame.addKeyListener( InputManager.getInstance() );  // InputManager.getInstance()
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
