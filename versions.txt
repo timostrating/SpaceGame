@@ -1,7 +1,10 @@
 0.0.5
-    TODO: Inputmanager
+    Inputmanager
     TODO: Player controller
-    TODO: UI  opgesplitst in   UI, Debug
+    UI  opgesplitst in   UI, DebugFPS
+    settings class
+    Game loop betere documentatie
+    UI bevat nu drawStringAtCenter()
 
 
 0.0.4
