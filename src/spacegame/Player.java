@@ -93,4 +93,29 @@ public class Player extends MoveableObject {
 	public void setHitpoints( double hitP ) {
 		this.hitPoints = hitP;
 	}
+
+
+
+//	// shiet bullet af vanaf de Speler
+//	private void createBullet() {  // TODO this should not be here, this is for the player / gun
+//		bullets.add(new Bullet(
+//				player.getX()
+//						+ (player.getSpriteWidth() / 2 -
+//								(Bullet.SPRITE_SIZE_WIDTH / 2)),
+//				player.getY() - Bullet.SPRITE_SIZE_HEIGHT,
+//				player.getHitpoints(),
+//				bounds));
+//		JukeBox.play("firing");
+//	}
+//
+//	private void createBullet() {  // TODO this should not be here, this is for the player / gun
+//		bullets.add(new Bullet(
+//				player.getX()
+//						+ (player.getSpriteWidth() / 2 -
+//								(Bullet.SPRITE_SIZE_WIDTH / 2)),
+//				player.getY() - Bullet.SPRITE_SIZE_HEIGHT,
+//				player.getHitpoints(),
+//				bounds));
+//		JukeBox.play("firing");
+//	}
 }

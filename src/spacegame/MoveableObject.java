@@ -93,9 +93,9 @@ public abstract class MoveableObject {    // TODO add Mobi
 		this.velocityY = velocityY;
 	}
 	
-	public void setVelocity(double veloX, double veloY) {
-		this.velocityX = veloX;
-		this.velocityY = veloY;
+	public void setVelocity(Vector2D velocity) {
+		this.velocityX = velocity.x;
+		this.velocityY = velocity.y;
 	}
 
 

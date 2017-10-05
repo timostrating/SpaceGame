@@ -34,7 +34,7 @@ public class Background {
 		secondaryBackgroundPosition.y += backgroundMoveSpeed;
 		
 		if (mainBackgroundPosition.y >= (double) mainBackgroundImage.getHeight()) {
-			mainBackgroundPosition.y = 0.0;
+			mainBackgroundPosition.y = 0.0f;
 			secondaryBackgroundPosition.y = -(mainBackgroundImage.getHeight());
 		}
 	}
